@@ -18,14 +18,25 @@ export interface FetchNotesParams {
 }
 
 export interface FetchNotesResponse {
-  results: Note[];
+  notes: Note[];
   totalPages: number;
 }
 
 export const fetchNotes = async (
   params: FetchNotesParams
 ): Promise<FetchNotesResponse> => {
-  const response = await instance.get("", { params });
+  const { page, perPage, search } = params;
+
+  const queryParams: Record<string, string | number> = {
+    page,
+    perPage,
+  };
+
+  if (search?.trim()) {
+    queryParams.search = search;
+  }
+
+  const response = await instance.get("", { params: queryParams });
   return response.data;
 };
 

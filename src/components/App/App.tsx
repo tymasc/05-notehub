@@ -21,11 +21,14 @@ export default function App() {
     placeholderData: (previousData) => previousData,
   });
 
+  console.log("DATA:", data);
+
+
   const handleDelete = async (id: string) => {
-    await deleteNote(id);
+    await deleteNote(String(id));
     refetch();
   };
-  const results = data?.results ?? [];
+  const notes = data?.notes ?? [];
   const totalPages = data?.totalPages ?? 0;
 
   return (
@@ -40,8 +43,8 @@ export default function App() {
         </button>
       </header>
 
-      {results.length > 0 && (
-        <NoteList notes={results} onDelete={handleDelete} />
+      {notes.length > 0 && (
+        <NoteList notes={notes} onDelete={handleDelete} />
       )}
 
       {isModalOpen && (

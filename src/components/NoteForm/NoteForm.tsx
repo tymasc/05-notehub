@@ -61,11 +61,11 @@ export default function NoteForm({ onSuccsess, onCancel }: FormNoteProps) {
           <div className={css.formGroup}>
             <label htmlFor="tag">Tag</label>
             <Field as="select" id="tag" name="tag" className={css.select}>
-              {tags.map((tag) => {
+              {tags.map((tag) => (
                 <option key={tag} value={tag}>
                   {tag}
-                </option>;
-              })}
+                </option>
+              ))}
             </Field>
             <ErrorMessage component="span" name="tag" className={css.error} />
           </div>

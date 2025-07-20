@@ -7,7 +7,7 @@ interface ModalProps {
   onClose: () => void;
 }
 
-export default function Modal({ onClose }: ModalProps) {
+export default function Modal({ children, onClose }: ModalProps) {
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
@@ -27,7 +27,7 @@ export default function Modal({ onClose }: ModalProps) {
       aria-modal="true"
       onClick={handleBackdropClose}
     >
-      <div className={css.modal}>{/* */}</div>
+      <div className={css.modal}>{children}</div>
     </div>,
     document.body
   );
