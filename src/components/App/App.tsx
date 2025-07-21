@@ -21,36 +21,37 @@ export default function App() {
     placeholderData: (previousData) => previousData,
   });
 
-  console.log("DATA:", data);
-
-
-  const handleDelete = async (id: string) => {
-    await deleteNote(String(id));
+  const handleDelete = async (id: number) => {
+    await deleteNote(Number(id));
     refetch();
   };
+
   const notes = data?.notes ?? [];
   const totalPages = data?.totalPages ?? 0;
 
+  const handleSearchChange = (value: string) => {
+    setSearchQuery(value);
+    setPage(1);
+  };
+  
   return (
     <div className={css.app}>
       <header className={css.toolbar}>
-        <SearchBox value={searchQuery} onChange={setSearchQuery} />
+        <SearchBox value={searchQuery} onChange={handleSearchChange} />
         {totalPages > 1 && (
-          <Pagination pageCount={totalPages} onPageChange={setPage} />
+          <Pagination pageCount={totalPages} onPageChange={setPage} currentPage={page}/>
         )}
         <button className={css.button} onClick={() => setIsModalOpen(true)}>
           Create note +
         </button>
       </header>
 
-      {notes.length > 0 && (
-        <NoteList notes={notes} onDelete={handleDelete} />
-      )}
+      {notes.length > 0 && <NoteList notes={notes} onDelete={handleDelete} />}
 
       {isModalOpen && (
         <Modal onClose={() => setIsModalOpen(false)}>
           <NoteForm
-            onSuccsess={() => {
+            onSuccess={() => {
               setIsModalOpen(false);
               refetch();
             }}
