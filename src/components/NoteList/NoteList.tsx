@@ -5,7 +5,6 @@ import { deleteNote } from "../../services/noteService";
 
 interface NoteListProps {
   notes: Note[];
-  onDelete: (id: number) => void;
 }
 
 export default function NoteList({ notes }: NoteListProps) {
