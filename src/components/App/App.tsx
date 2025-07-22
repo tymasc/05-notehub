@@ -1,7 +1,7 @@
 import css from "./App.module.css";
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { fetchNotes, deleteNote } from "../../services/noteService";
+import { fetchNotes } from "../../services/noteService";
 import { useDebounce } from "../../hooks/useDebounce";
 import SearchBox from "../SearchBox/SearchBox";
 import Pagination from "../Pagination/Pagination";
@@ -20,11 +20,6 @@ export default function App() {
     queryFn: () => fetchNotes({ page, perPage: 12, search: debouncedSearch }),
     placeholderData: (previousData) => previousData,
   });
-
-  const handleDelete = async (id: number) => {
-    await deleteNote(Number(id));
-    refetch();
-  };
 
   const notes = data?.notes ?? [];
   const totalPages = data?.totalPages ?? 0;
@@ -46,7 +41,7 @@ export default function App() {
         </button>
       </header>
 
-      {notes.length > 0 && <NoteList notes={notes} onDelete={handleDelete} />}
+      {notes.length > 0 && <NoteList notes={notes} />}
 
       {isModalOpen && (
         <Modal onClose={() => setIsModalOpen(false)}>
